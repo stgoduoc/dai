@@ -5,7 +5,7 @@ class ConnectionFactory {
 	const SERVIDOR 	= "localhost";
 	const USUARIO 	= "root"; 
 	const PASSWORD 	= "";
-	const PUERTO	= "3306";
+	const PUERTO	= "3307";
 	const BASEDATOS	= "dai";
 	
 	private static $conexion = null;

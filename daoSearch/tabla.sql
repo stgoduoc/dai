@@ -2,5 +2,6 @@ CREATE TABLE alumnos(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
     , nombre VARCHAR(255) NOT NULL
     , apellido VARCHAR(255) NOT NULL
+	, fecha_nacimiento DATE
     , fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

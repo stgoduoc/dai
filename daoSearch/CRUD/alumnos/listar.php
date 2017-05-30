@@ -33,8 +33,14 @@ $alumnos = AlumnosDAO::searchByNombreApellido($nombre, $apellido);
 <div class="container">
 <h1>Alumnos</h1>
 <form method="get">
-<a class="btn btn-success" href="form.php" role="button">Nuevo</a>
-<button type="submit" class="btn btn-warning">Buscar</button>
+<a class="btn btn-success" href="form.php" role="button">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	Nuevo
+</a>
+<button type="submit" class="btn btn-warning">
+	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	Buscar
+</button>
 <table class="table table-hover">
 	<thead style="background-color:#ccc">
 		<tr>
@@ -47,8 +53,9 @@ $alumnos = AlumnosDAO::searchByNombreApellido($nombre, $apellido);
 				Apellido<br />
 				<input type="text" name="apellido" value="<?=$apellido?>" />
 			</th>
-			<th>Fecha Creación</th>
-			<th>Acciones</th>
+			<th>Fecha de Nacimiento<br />(yyyy-mm-dd)</th>
+			<th>Fecha Creación<br /></th>
+			<th>Acciones<br /></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -59,10 +66,17 @@ foreach($alumnos as $alumno):
 			<td><?=$alumno->id?></td>
 			<td><?=$alumno->nombre?></td>
 			<td><?=$alumno->apellido?></td>
+			<td><?=$alumno->fechaNacimiento?></td>
 			<td><?=$alumno->fechaCreacion?></td>
 			<td>
-				<a class="btn btn-info" href="form.php?id=<?=$alumno->id?>" role="button">Editar</a>
-				<a class="btn btn-danger" href="delete.php?id=<?=$alumno->id?>" role="button">Eliminar</a>
+				<a class="btn btn-info" href="form.php?id=<?=$alumno->id?>" role="button">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					Editar
+				</a>
+				<a class="btn btn-danger" href="delete.php?id=<?=$alumno->id?>" role="button">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					Eliminar
+				</a>
 			</td>
 		</tr>
 <?php
