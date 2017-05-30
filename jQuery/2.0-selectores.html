@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery - Selectores</title>
+	<meta charset="UTF-8" />
+	<!-- JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<p id="primer-parrafo">
+		Lorem ipsum dolor asit atme
+	</p>
+	<ul class="menu">
+		<li>
+			<a href="#">Inicio</a>
+			<a href="#">Quiénes Somos</a>
+			<a href="#">Servicios</a>
+			<a href="#">Ubicación</a>
+			<a href="#">Contacto</a>
+		</li>
+	</ul>
+	<script type="text/javascript">
+		// uso de selector CSS para IDs
+		// y el método CSS de jQuery que permite configurar el estilo
+		$("#primer-parrafo")
+			.css("fontSize", "24px")
+			.css("fontWeight", "bold")
+		;
+		// Con selectores CSS3 recupera el primer elemento de la lista
+		$("ul.menu li a:first-child").html("Home");
+	</script>
+</body>
+</html>

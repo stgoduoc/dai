@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery - Eventos</title>
+	<meta charset="UTF-8" />
+	<!-- JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<div id="mensajes" style="margin-bottom:10px;">
+		
+	</div>
+	<form method="post" id="formulario-registro">
+		Nombre Completo
+		<input type="text" name="nombre" />
+		<br />
+		Correo electrónico
+		<input type="text" name="correo" />
+		<br />
+		<button id="btnRegistrar">Registrar</button>
+	</form>
+	
+	<script type="text/javascript">
+		// selector sobre el botón del formulario 
+		// click() setea el event handler que hara la petición asincrónica 
+		$("#btnRegistrar").click(function(){
+			var nombre = $("#formulario-registro input[name=nombre]").val();
+			var correo = $("#formulario-registro input[name=correo]").val();
+			// las funciones get() y post() se contactan asincrónicamente con el servidor
+			// get() para el método GET y post() para POST
+			$.get(
+				// parámetro que indica la ruta en el servidor del archivo a consultar
+				"5.0-ajax.php"
+				// JSON con los datos a enviar al servidor
+				, {
+					nombre: nombre
+					, correo: correo
+				}
+				// función anónima que se ejecuta cuando el servidor responde con datos 
+				, function(data, status){
+					console.log(data);
+					console.log(status);
+					var mensaje = "";
+					if(data.exitoso){
+						mensaje = "Registro guardado correctamente.";
+						$("#mensajes").css("background-color", "green");
+					} else {
+						mensaje = "Problemas al guardar el registro.";
+						$("#mensajes").css("background-color", "red");
+					}
+					$("#mensajes").html(mensaje).css("color","white");
+				}
+				// representa el tipo de dato devuelto por el servidor
+				, "json"
+			);
+			// retorna false para que el formulario no se envíe de manera normal
+			return false;
+		});
+	</script>
+</body>
+</html>

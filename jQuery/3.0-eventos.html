@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery - Eventos</title>
+	<meta charset="UTF-8" />
+	<!-- JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<div id="mensajes"></div>
+	<form method="post">
+		Nombre Completo
+		<input type="text" name="nombre" />
+		<br />
+		Correo electrónico
+		<input type="text" name="nombre" />
+		<br />
+		<button id="btnRegistrar">Registrar</button>
+	</form>
+	
+	<script type="text/javascript">
+		// jQuery selector del ID btnRegistrar
+		// la funcion click configura una función anónima
+		// que corresponde al event handler
+		// retorna false para que no se envíe el formulario
+		$("#btnRegistrar").click(function(){
+			jQuery("#mensajes").html("Enviando...");
+			jQuery("#mensajes").css("backgroundColor", "yellow");
+			// timeout ejecuta la función anónima después de 
+			// que pasan 3000 milisegundos
+			setTimeout(function(){
+					jQuery("#mensajes").html("Enviado!!!");
+					jQuery("#mensajes").css("color", "white");
+					jQuery("#mensajes").css("backgroundColor", "green");
+				} 
+				, 3000 
+			);
+			return false;
+		});
+	</script>
+</body>
+</html>
