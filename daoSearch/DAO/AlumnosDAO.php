@@ -63,25 +63,40 @@ class AlumnosDAO {
 		$statement->execute();
 	}
 	
+	public static function cambiarContrasena($id, $nuevaContrasena){
+		$conexion 	= self::getConnection();
+		$id 		= intval($id);
+		$sql 		= "UPDATE ".self::TABLA." SET contrasena = :contrasena WHERE id = :alumno_id";
+		$statement 	= $conexion->prepare($sql);
+		$statement->bindValue(":alumno_id", $id);
+		$statement->bindValue(":contrasena", md5($nuevaContrasena));
+		$statement->execute();
+	}
+	
 	public static function save(Alumno $alumno) {
 		$conexion = self::getConnection();
 		
 		if($alumno->id == 0) {
 			// alumno nuevo
-			$sql = "INSERT INTO ".self::TABLA."(nombre, apellido, usuario, contrasena, fecha_nacimiento) VALUES(:nombre, :apellido, :fecha_nacimiento)";
+			$sql = "INSERT INTO ".self::TABLA."(nombre, apellido, usuario, contrasena, fecha_nacimiento) VALUES(:nombre, :apellido, :usuario, :contrasena, :fecha_nacimiento)";
 		} else {
 			// modificar alumno
-			$sql = "UPDATE ".self::TABLA." SET nombre = :nombre, apellido = :apellido, usuario = :usuario, contrasena = :contrasena, fecha_nacimiento = :fecha_nacimiento WHERE id = :alumno_id";
+			$sql = "UPDATE ".self::TABLA." SET nombre = :nombre, apellido = :apellido, usuario = :usuario, fecha_nacimiento = :fecha_nacimiento WHERE id = :alumno_id";
 		}
 		$statement = $conexion->prepare($sql);
 		$statement->bindValue(":nombre", $alumno->nombre);
 		$statement->bindValue(":apellido", $alumno->apellido);
 		$statement->bindValue(":usuario", $alumno->usuario);
-		$statement->bindValue(":contrasena", $alumno->contrasena);
 		$statement->bindValue(":fecha_nacimiento", $alumno->fechaNacimiento);
+				
 		if($alumno->id > 0){
+			// modificar
 			$statement->bindValue(":alumno_id", $alumno->id);
+		} else {
+			// crear
+			$statement->bindValue(":contrasena", md5($alumno->contrasena));
 		}
+		
 		$statement->execute();
 		if($alumno->id == 0) {
 			$alumno->id = intval($conexion->lastInsertId());

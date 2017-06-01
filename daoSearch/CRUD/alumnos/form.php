@@ -2,21 +2,27 @@
 require_once "../../DAO/AlumnosDAO.php";
 require_once "../../DAO/Alumno.php";
 
-$mensajes = array();
-$mensajesError = array();
+// accion por defecto
+$accion 		= "nuevo";
+$mensajes 		= array();
+$mensajesError 	= array();
 
 // si viene para editar
 if( isset($_GET["id"]) ){
+	$accion = "editar";
 	$id = intval($_GET["id"]);
 	$alumno = AlumnosDAO::getById($id);
 }else {
-	$alumno = new Alumno(null, "", "", null, time());
+	// $accion = "nuevo";
+	$alumno = new Alumno(null, "", "", "", "", null, time());
 }
 
 // si se envió el formulario procesar
 if( isset($_POST["nombre"]) ){
-	$alumno = new Alumno(intval($_POST["id"]), $_POST["nombre"], $_POST["apellido"], $_POST["usuario"], $_POST["contrasena"], $_POST["nacimiento"], time());
+	$contrasena = isset($_POST["contrasena"])?$_POST["contrasena"]:"";
+	$alumno = new Alumno(intval($_POST["id"]), $_POST["nombre"], $_POST["apellido"], $_POST["usuario"], $contrasena, $_POST["nacimiento"], time());
 	$alumno = AlumnosDAO::save($alumno);
+	$accion = "editar";
 	$mensajes[] = "Alumno guardado correctamente";
 }
 
@@ -65,16 +71,24 @@ if( isset($_POST["nombre"]) ){
 				<label for="usuario">Usuario</label>
 				<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre de Usuario" value="<?=$alumno->usuario?>">
 			</div>
+			<?php if($accion != "editar"): ?>
 			<div class="form-group">
 				<label for="contrasena">Contraseña</label>
-				<input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" value="<?=$alumno->apellido?>">
+				<input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña">
 			</div>
+			<?php endif; ?>
 			<div class="form-group">
 				<label for="nacimiento">Fecha de Nacimiento</label>
 				<input type="text" class="form-control" id="nacimiento" name="nacimiento" placeholder="yyyy-mm-dd" value="<?=$alumno->fechaNacimiento?>">
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-			<a class="btn btn-danger" href="listar.php" role="button">Cancelar</a>
+			<button type="submit" class="btn btn-default">
+				<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+				Guardar
+			</button>
+			<a class="btn btn-danger" href="listar.php" role="button">
+				<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
+				Cancelar
+			</a>
 		</form>
 	</div>
 	

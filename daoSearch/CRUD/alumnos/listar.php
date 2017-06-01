@@ -22,6 +22,7 @@
 require_once "../../DAO/AlumnosDAO.php";
 
 if(isset($_GET["nombre"])){
+	// sanitiza variables para evitar inyección de código
 	$nombre 	= htmlspecialchars($_GET["nombre"]);
 	$apellido 	= htmlspecialchars($_GET["apellido"]);
 }else {
@@ -53,6 +54,9 @@ $alumnos = AlumnosDAO::searchByNombreApellido($nombre, $apellido);
 				Apellido<br />
 				<input type="text" name="apellido" value="<?=$apellido?>" />
 			</th>
+			<th>
+				Username
+			</th>
 			<th>Fecha de Nacimiento<br />(yyyy-mm-dd)</th>
 			<th>Fecha Creación<br /></th>
 			<th>Acciones<br /></th>
@@ -66,6 +70,7 @@ foreach($alumnos as $alumno):
 			<td><?=$alumno->id?></td>
 			<td><?=$alumno->nombre?></td>
 			<td><?=$alumno->apellido?></td>
+			<td><?=$alumno->usuario?></td>
 			<td><?=$alumno->fechaNacimiento?></td>
 			<td><?=$alumno->fechaCreacion?></td>
 			<td>
@@ -76,6 +81,10 @@ foreach($alumnos as $alumno):
 				<a class="btn btn-danger" href="delete.php?id=<?=$alumno->id?>" role="button">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					Eliminar
+				</a>
+				<a class="btn btn-danger" href="password.php?id=<?=$alumno->id?>" role="button">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					Password
 				</a>
 			</td>
 		</tr>
