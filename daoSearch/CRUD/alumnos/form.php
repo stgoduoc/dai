@@ -15,7 +15,7 @@ if( isset($_GET["id"]) ){
 
 // si se envió el formulario procesar
 if( isset($_POST["nombre"]) ){
-	$alumno = new Alumno(intval($_POST["id"]), $_POST["nombre"], $_POST["apellido"], $_POST["nacimiento"], time());
+	$alumno = new Alumno(intval($_POST["id"]), $_POST["nombre"], $_POST["apellido"], $_POST["usuario"], $_POST["contrasena"], $_POST["nacimiento"], time());
 	$alumno = AlumnosDAO::save($alumno);
 	$mensajes[] = "Alumno guardado correctamente";
 }
@@ -60,6 +60,14 @@ if( isset($_POST["nombre"]) ){
 			<div class="form-group">
 				<label for="apellido">Apellido</label>
 				<input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido del alumno" value="<?=$alumno->apellido?>">
+			</div>
+			<div class="form-group">
+				<label for="usuario">Usuario</label>
+				<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre de Usuario" value="<?=$alumno->usuario?>">
+			</div>
+			<div class="form-group">
+				<label for="contrasena">Contraseña</label>
+				<input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" value="<?=$alumno->apellido?>">
 			</div>
 			<div class="form-group">
 				<label for="nacimiento">Fecha de Nacimiento</label>

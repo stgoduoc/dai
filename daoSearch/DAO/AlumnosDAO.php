@@ -8,7 +8,7 @@ class AlumnosDAO {
 	const TABLA = "alumnos";
 	
 	public static function createObject($data){
-		return new Alumno($data["id"], $data["nombre"], $data["apellido"], $data["fecha_nacimiento"], $data["fecha_creacion"]);
+		return new Alumno($data["id"], $data["nombre"], $data["apellido"], $data["usuario"], $data["contrasena"], $data["fecha_nacimiento"], $data["fecha_creacion"]);
 	}
 	
 	public static function getById($alumnoId) {
@@ -68,14 +68,16 @@ class AlumnosDAO {
 		
 		if($alumno->id == 0) {
 			// alumno nuevo
-			$sql = "INSERT INTO ".self::TABLA."(nombre, apellido, fecha_nacimiento) VALUES(:nombre, :apellido, :fecha_nacimiento)";
+			$sql = "INSERT INTO ".self::TABLA."(nombre, apellido, usuario, contrasena, fecha_nacimiento) VALUES(:nombre, :apellido, :fecha_nacimiento)";
 		} else {
 			// modificar alumno
-			$sql = "UPDATE ".self::TABLA." SET nombre = :nombre, apellido = :apellido, fecha_nacimiento = :fecha_nacimiento WHERE id = :alumno_id";
+			$sql = "UPDATE ".self::TABLA." SET nombre = :nombre, apellido = :apellido, usuario = :usuario, contrasena = :contrasena, fecha_nacimiento = :fecha_nacimiento WHERE id = :alumno_id";
 		}
 		$statement = $conexion->prepare($sql);
 		$statement->bindValue(":nombre", $alumno->nombre);
 		$statement->bindValue(":apellido", $alumno->apellido);
+		$statement->bindValue(":usuario", $alumno->usuario);
+		$statement->bindValue(":contrasena", $alumno->contrasena);
 		$statement->bindValue(":fecha_nacimiento", $alumno->fechaNacimiento);
 		if($alumno->id > 0){
 			$statement->bindValue(":alumno_id", $alumno->id);
